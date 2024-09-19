@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        .movie-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 10px;
+            padding: 10px;
+            width: 250px;
+            display: inline-block;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .movie-card h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .movie-card p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+
+        .remove-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>
+            <a href="./index.html">Back</a>
+        </p>
+    </div>
+    <div id="card-container"></div>
+    <script>
+        // Retrieve cart data from localStorage or initialize as an empty array
+        let cartData = JSON.parse(localStorage.getItem('cart')) || [];
+        const container = document.getElementById('card-container');
+
+        function updateCart() {
+            // Clear the container to prevent duplicate display
+            container.innerHTML = '';
+
+            // If cart is empty, show empty message
+            if (cartData.length === 0) {
+                container.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                // Loop through cart items and create movie cards
+                cartData.forEach(movie => {
+                    const movieCard = document.createElement('div');
+                    movieCard.className = 'movie-card';
+
+                    movieCard.innerHTML = `
+                        <img src="${movie.img}" alt="${movie.title}">
+                        <div>
+                            <h2>${movie.title}</h2>
+                            <p>Rating: ${movie.rating}</p>
+                            <p>Price: $${movie.price.toFixed(2)}</p>
+                            <p>Quantity: ${movie.quantity}</p>
+                            <p>Total Price: $${movie.totalPrice}</p>
+                            <button class="remove-button">Remove from Cart</button>
+                        </div>
+                    `;
+
+                    // Add event listener for removing the movie from cart
+                    movieCard.querySelector('.remove-button').addEventListener('click', () => {
+                        // Filter out the movie to be removed from cartData
+                        cartData = cartData.filter(item => item.title !== movie.title);
+
+                        // Update the localStorage
+                        localStorage.setItem('cart', JSON.stringify(cartData));
+
+                        // Re-render the cart after removal
+                        updateCart();
+                    });
+
+                    container.appendChild(movieCard);
+                });
+            }
+        }
+
+        // Initial rendering of the cart
+        updateCart();
+    </script>
+</body>
+</html>

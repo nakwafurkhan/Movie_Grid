@@ -1,0 +1,40 @@
+body {
+    background-color: white;
+}
+.container {
+    width: 1300px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline: auto;
+    gap: 20px;
+    margin-top: 20px;
+}
+.movie-card {
+    width: 400px;
+    border: 1px solid black;
+    background-color: white;
+    box-sizing: border-box;
+    cursor: pointer;
+
+}
+.movie-card img {
+    width: 100%;
+    height: auto;
+}
+.movie-card div {
+    padding: 20px;
+}
+.book-button {
+    padding: 5px 15px;
+    background-color: skyblue;
+    border: none;
+    display: block;
+    margin-inline: auto;
+    cursor: pointer;
+}
+header{
+    position: fixed;
+    top: 15px;
+    right: 30px;
+    cursor: pointer;
+}
